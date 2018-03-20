@@ -13,6 +13,7 @@ asmlinkage long sys_rtnice(long givenPID, int rtnice) {
       {
         flag = 1;
         proces->se.rtnice = rtnice;
+        printk("%ld\n",proces->se.rtnice);
       }
   }
 
