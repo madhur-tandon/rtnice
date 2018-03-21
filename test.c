@@ -5,62 +5,45 @@
 #include <time.h>
 #include <sys/time.h>
 
-int main()
+unsigned long long nCr(unsigned long long n, unsigned long long r)
 {
-	
-	//printf("System call sys_rt_nice returned %ld\n",amma);
-	struct timeval start;
-	//clock_t begin =clock();
-	gettimeofday(&start,NULL);
-	long int pid=fork();
-	
-	
-	//unsigned long long int n
-	printf("System call sys_rt_nice boo %ld\n",pid);
-	
-	if(pid!=0)
+	if(n>=r)
 	{
-		printf("System call sys_rt_nice returned %ld\n",pid);
-		printf("System call sys_rt_nice not returned %ld\n",getpid());
-		//syscall(323,pid,200);
-	}
-
-	
-	if(pid==0)
-	{
-		struct timeval stop;
-		//clock_t begin =clock();
-		long prod=1;
-		long i=1;
-		for(i=1;i<1000000000;i++)
+		if(r==0 || r==n)
 		{
-			prod=prod*i;
-			//if(i%1000000==0)	
-				//syscall(324,getpid());		
+			return 1;
 		}
-		gettimeofday(&stop,NULL);
-		//clock_t end = clock();
-		printf("Time %lu PID %ld \n",stop.tv_usec - start.tv_usec,getpid());
-		
+		else
+		{
+			return nCr(n-1,r-1) + nCr(n-1,r);
+		}
 	}
 	else
 	{
-		struct timeval stop;
-		
-		long prod=1;
-		long i=1;
-		for(i=1;i<1000000000;i++)
-		{
-			prod=prod*i;
-			//printf("%ld\n",getpid());
-			//syscall(324,getpid());
-			
-			
-		}
-		gettimeofday(&stop,NULL);
-		
-		//clock_t end = clock();	
-		printf("Time %lu PID %ld \n",stop.tv_usec - start.tv_usec,getpid());
+		return 0;
+	}
+}
+
+int main()
+{
+	long int pid=fork();
+
+	if(pid!=0)
+	{
+		syscall(323,pid,200);
+	}
+
+	if(pid==0)
+	{
+		unsigned long long ans = nCr(30,15);
+		printf("Finished calculating 30C15\n");
+		printf("Process with PID %ld finished\n",getpid());
+	}
+	else
+	{
+		unsigned long long ans = nCr(24,12);
+		printf("Finished calculating 24C12\n");
+		printf("Process with PID %ld finished\n",getpid());
 		wait(pid);
 	}
 	return 0;
