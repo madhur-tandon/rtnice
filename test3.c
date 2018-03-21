@@ -29,11 +29,15 @@ unsigned long long nCr(unsigned long long n, unsigned long long r)
 int main()
 {
 	long int pid=fork();
+
 	if(pid!=0)
 	{
 		long ret = syscall(323,pid,200);
 		printf("%s\n",strerror(ret));
+		long ret2 = syscall(323,getpid(),200);
+		printf("%s\n",strerror(ret2));
 	}
+
 	if(pid==0)
 	{
 		unsigned long long ans = nCr(30,15);

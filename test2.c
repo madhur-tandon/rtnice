@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
+#include <string.h>
+#include <errno.h>
 
 unsigned long long nCr(unsigned long long n, unsigned long long r)
 {
@@ -30,7 +32,8 @@ int main()
 
 	if(pid!=0)
 	{
-		syscall(323,pid,300);
+		long ret = syscall(323,pid,300);
+		printf("%s\n",strerror(ret));
 	}
 
 	if(pid==0)
@@ -38,7 +41,8 @@ int main()
 		int pid2=fork();
 		if(pid2 != 0)
 		{
-			syscall(323,pid2,200);
+			long ret2 = syscall(323,pid2,200);
+			printf("%s\n",strerror(ret2));
 		}
 		if(pid2==0)
 		{
