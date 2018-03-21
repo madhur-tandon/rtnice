@@ -5,15 +5,32 @@
 #include <time.h>
 #include <sys/time.h>
 
+unsigned long long nCr(unsigned long long n, unsigned long long r)
+{
+	if(n>=r)
+	{
+		if(r==0 || r==n)
+		{
+			return 1;
+		}
+		else
+		{
+			return nCr(n-1,r-1) + nCr(n-1,r);
+		}
+	}
+	else
+	{
+		return 0;
+	}
+}
+
 int main()
 {
 	long int pid=fork();
 
 	if(pid!=0)
 	{
-		printf("System call sys_rt_nice returned %ld\n",pid);
-		printf("System call sys_rt_nice not returned %ld\n",getpid());
-		syscall(323,pid,200);
+		syscall(323,pid,300);
 	}
 
 	if(pid==0)
@@ -25,36 +42,23 @@ int main()
 		}
 		if(pid2==0)
 		{
-			long prod=1;
-			long i=1;
-			for(i=1;i<2000000000;i++)
-			{
-				prod=prod*i;
-			}
-
-			printf("Time %lu PID %ld \n",stop.tv_usec - start.tv_usec,getpid());
+			unsigned long long ans = nCr(30,15);
+			printf("Finished calculating 30C15\n");
+			printf("Process with PID %ld finished\n",getpid());
 		}
 		else
 		{
-			long prod=1;
-			long i=1;
-			for(i=1;i<2000000000;i++)
-			{
-				prod=prod*i;
-			}
-			printf("Time %lu PID %ld \n",stop.tv_usec - start.tv_usec,getpid());
+			unsigned long long ans = nCr(30,15);
+			printf("Finished calculating 30C15\n");
+			printf("Process with PID %ld finished\n",getpid());
 			wait(pid2);
 		}
 	}
 	else
 	{
-			long prod=1;
-			long i=1;
-			for(i=1;i<2000000000;i++)
-			{
-				prod=prod*i;
-			}
-			printf("Time %lu PID %ld \n",stop.tv_usec - start.tv_usec,getpid());
+			unsigned long long ans = nCr(30,15);
+			printf("Finished calculating 30C15\n");
+			printf("Process with PID %ld finished\n",getpid());
 			wait(pid);
 	}
 	return 0;
