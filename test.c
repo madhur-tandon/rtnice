@@ -39,6 +39,7 @@ int main()
 		unsigned long long ans = nCr(30,15);
 		printf("Finished calculating 30C15\n");
 		printf("Process with PID %ld finished\n",getpid());
+		printf("mera sabse acha laptop");
 	}
 	else
 	{
